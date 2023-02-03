@@ -4,6 +4,8 @@ using MovieFestival.Features.AllUsersFeatures.Queries;
 
 namespace MovieFestival.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class MovieAllUsersController : ControllerBase
     {
         private IMediator _mediator;

@@ -6,7 +6,8 @@ using MovieFestival.Features.AdminFeatures.Queries;
 
 namespace MovieFestival.Controllers
 {
-    [Authorize]
+    [ApiController]
+    [Route("api/admin/[controller]")]
     public class MovieAdminController : ControllerBase
     {
         private IMediator _mediator;
