@@ -1,4 +1,6 @@
-﻿namespace MovieFestival.Models
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace MovieFestival.Models
 {
     public class Movie
     {
@@ -10,4 +12,5 @@
         public string? WatchUrl { get; set; }
         public int ViewCount { get; set; } = 0;
     }
+
 }

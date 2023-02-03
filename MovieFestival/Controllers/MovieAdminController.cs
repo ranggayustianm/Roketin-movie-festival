@@ -7,7 +7,7 @@ using MovieFestival.Features.AdminFeatures.Queries;
 namespace MovieFestival.Controllers
 {
     [ApiController]
-    [Route("api/admin/[controller]")]
+    [Route("api/admin/[action]")]
     public class MovieAdminController : ControllerBase
     {
         private IMediator _mediator;
@@ -29,11 +29,13 @@ namespace MovieFestival.Controllers
             return Ok(await Mediator.Send(command));
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetMostViewedMovie()
         {
             return Ok(await Mediator.Send(new GetMostViewedMovieQuery()));
         }
 
+        [HttpGet]
         public async Task<IActionResult> GetMostViewedGenre()
         {
             return Ok(await Mediator.Send(new GetMostViewedGenreQuery()));

@@ -22,6 +22,7 @@ namespace MovieFestival.Features.AllUsersFeatures.Queries
                 return await _context.Movies
                     .Skip((query.PageNumber - 1) * query.PageSize)
                     .Take(query.PageSize)
+                    .OrderBy(key => key.Id)
                     .ToListAsync();
             }
         }

@@ -16,6 +16,8 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .Build();
 
+builder.Services.AddTransient<IApplicationContext, ApplicationContext>();
+
 builder.Services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(
                     configuration.GetConnectionString("DefaultConnection"),
@@ -24,11 +26,11 @@ builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 #region Swagger
 builder.Services.AddSwaggerGen(c =>
 {
-    c.IncludeXmlComments(string.Format(@"{0}\CQRS.MovieFestival.xml", System.AppDomain.CurrentDomain.BaseDirectory));
+    c.IncludeXmlComments(string.Format(@"{0}\MovieFestival.xml", System.AppDomain.CurrentDomain.BaseDirectory));
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "CQRS.MovieFestival",
+        Title = "MovieFestival",
     });
 
 });
@@ -42,7 +44,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "CQRS.MovieFestival");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MovieFestival");
     });
 }
 
