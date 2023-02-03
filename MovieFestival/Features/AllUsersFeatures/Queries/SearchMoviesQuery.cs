@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MovieFestival.Models;
 using MovieFestival.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieFestival.Features.AllUsersFeatures.Queries
 {

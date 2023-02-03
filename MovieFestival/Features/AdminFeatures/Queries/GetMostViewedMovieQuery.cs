@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using MovieFestival.Models;
 using MovieFestival.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieFestival.Features.AdminFeatures.Queries
 {
@@ -18,7 +19,7 @@ namespace MovieFestival.Features.AdminFeatures.Queries
             {
                 return await _context.Movies
                     .OrderByDescending(movie => movie.ViewCount)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
             }
         }
     }

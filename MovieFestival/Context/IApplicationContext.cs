@@ -1,4 +1,5 @@
-﻿using MovieFestival.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MovieFestival.Models;
 
 namespace MovieFestival.Context
 {

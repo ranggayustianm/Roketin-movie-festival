@@ -1,0 +1,47 @@
+# Build output
+bin/
+obj/
+
+# Dependency directories
+packages/
+
+# Test output
+TestResults/
+
+# Logs
+*.log
+
+# User-specific files
+*.user
+*.suo
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio files
+.vs/
+*.sln
+*.userprefs
+*.csproj.user
+*.suo
+
+# Visual Studio Code files
+.vscode/
+*.code-workspace
+
+# NuGet packages
+*.nuget.config
+
+# dotnet-cli configuration
+.config/
+
+# Private/Local files
+*.local
+*.secret
