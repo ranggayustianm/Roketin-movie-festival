@@ -19,7 +19,10 @@ namespace MovieFestival.Features.AllUsersFeatures.Queries
             {
                 var movie = _context.Movies.Where(movie => movie.Id == query.MovieId).FirstOrDefault();
                 if (movie == null) return false;
+
                 movie.ViewCount++;
+                await _context.SaveChanges();
+
                 return true;
             }
         }
