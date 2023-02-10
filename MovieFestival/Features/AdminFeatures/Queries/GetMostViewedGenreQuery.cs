@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MovieFestival.Features.AdminFeatures.Queries
 {
-    public class GetMostViewedGenreQuery : IRequest<string>
+    public class GetMostViewedGenreQuery : IRequest<List<string>>
     {
-        public class GetMostViewedGenreQueryHandler : IRequestHandler<GetMostViewedGenreQuery, string>
+        public class GetMostViewedGenreQueryHandler : IRequestHandler<GetMostViewedGenreQuery, List<string>>
         {
             private readonly IApplicationContext _context;
             public GetMostViewedGenreQueryHandler(IApplicationContext context)
@@ -15,20 +15,26 @@ namespace MovieFestival.Features.AdminFeatures.Queries
                 _context = context;
             }
 
-            public async Task<string> Handle(GetMostViewedGenreQuery query, CancellationToken cancellationToken)
+            public async Task<List<string>> Handle(GetMostViewedGenreQuery query, CancellationToken cancellationToken)
             {
                 var genres = _context.Movies
+                    .AsEnumerable()
                     .SelectMany(movie => movie.Genres)
                     .GroupBy(genre => genre)
                     .Select(genre => new { 
                         Genre = genre.Key,
-                        ViewCount = genre.Sum(x => _context.Movies.Where(y => y.Genres.Contains(genre.Key)).Sum(y => y.ViewCount)) 
+                        ViewCount = genre.Sum(x => _context.Movies.AsEnumerable().Where(y => y.Genres.Contains(genre.Key)).Sum(y => y.ViewCount)) 
                     });
 
-                return genres
+                var viewCount = genres
                     .OrderByDescending(genre => genre.ViewCount)
                     .FirstOrDefault()
-                    ?.Genre;
+                    ?.ViewCount;
+
+                return genres
+                    .Where(genre => genre.ViewCount == viewCount)
+                    .Select(item => item.Genre)
+                    .ToList();
             }
         }
     }

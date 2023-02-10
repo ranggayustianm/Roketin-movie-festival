@@ -3,23 +3,24 @@ using MovieFestival.Context;
 
 namespace MovieFestival.Features.AllUsersFeatures.Queries
 {
-    public class TrackViewershipQuery : IRequest<int>
+    public class WatchMovieQuery : IRequest<bool>
     {
         public int MovieId { get; set; }
 
-        public class TrackViewershipQueryHandler : IRequestHandler<TrackViewershipQuery, int>
+        public class WatchMovieQueryHandler : IRequestHandler<WatchMovieQuery, bool>
         {
             private readonly IApplicationContext _context;
-            public TrackViewershipQueryHandler(IApplicationContext context)
+            public WatchMovieQueryHandler(IApplicationContext context)
             {
                 _context = context;
             }
 
-            public async Task<int> Handle(TrackViewershipQuery query, CancellationToken cancellationToken)
+            public async Task<bool> Handle(WatchMovieQuery query, CancellationToken cancellationToken)
             {
                 var movie = _context.Movies.Where(movie => movie.Id == query.MovieId).FirstOrDefault();
-                if (movie == null) return -1;
-                return movie.ViewCount;
+                if (movie == null) return false;
+                movie.ViewCount++;
+                return true;
             }
         }
     }

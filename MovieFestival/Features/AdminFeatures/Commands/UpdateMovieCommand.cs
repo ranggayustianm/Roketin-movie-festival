@@ -1,12 +1,12 @@
 ﻿using MediatR;
-using MovieFestival.Models;
 using MovieFestival.Context;
-using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace MovieFestival.Features.AdminFeatures.Commands
 {
     public class UpdateMovieCommand : IRequest<int>
     {
+        [JsonIgnore]
         public int Id { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
@@ -26,7 +26,7 @@ namespace MovieFestival.Features.AdminFeatures.Commands
                 var movie = _context.Movies.Where(movie => movie.Id == command.Id).FirstOrDefault();
                 if (movie == null)
                 {
-                    return default;
+                    return -1;
                 }
 
                 movie.Title = command.Title;

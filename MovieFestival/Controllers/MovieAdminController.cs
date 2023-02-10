@@ -1,8 +1,8 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MovieFestival.Features.AdminFeatures.Commands;
 using MovieFestival.Features.AdminFeatures.Queries;
+using MovieFestival.Utils;
 
 namespace MovieFestival.Controllers
 {
@@ -16,29 +16,33 @@ namespace MovieFestival.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateMovieCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            var result = await Mediator.Send(command);
+            return Ok(new ResponseDto(result, $"New Movie with ID {result} successfully created"));
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, UpdateMovieCommand command)
         {
-            if (id != command.Id)
-            {
-                return BadRequest();
-            }
-            return Ok(await Mediator.Send(command));
+            command.Id = id;
+
+            var result = await Mediator.Send(command);
+            if (result == -1) return BadRequest(new ResponseDto(result, $"Movie ID is invalid: {id}", 400));
+
+            return Ok(new ResponseDto(result, $"Movie {id} successfully updated"));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetMostViewedMovie()
         {
-            return Ok(await Mediator.Send(new GetMostViewedMovieQuery()));
+            var result = await Mediator.Send(new GetMostViewedMovieQuery());
+            return Ok(new ResponseDto(result));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetMostViewedGenre()
         {
-            return Ok(await Mediator.Send(new GetMostViewedGenreQuery()));
+            var result = await Mediator.Send(new GetMostViewedGenreQuery());
+            return Ok(new ResponseDto(result));
         }
     }
 }
