@@ -22,6 +22,9 @@ namespace MovieFestival.Controllers
         [HttpGet("{searchTerm}")]
         public async Task<IActionResult> Search(string searchTerm)
         {
+            if (string.IsNullOrWhiteSpace(searchTerm)) 
+                return BadRequest(new ResponseDto(searchTerm, "Search term is invalid", 400));
+            
             var result = await Mediator.Send(new SearchMoviesQuery { SearchTerm = searchTerm });
             return Ok(new ResponseDto(result));
         }
